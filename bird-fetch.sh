@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 . /etc/os-release
 
 void="\e[0m"
@@ -22,8 +22,8 @@ else
     wm="some wm"
 fi
 
-echo "${blue}   __     ${red}$(cat /proc/sys/kernel/hostname)@${USER}${void}" 
-echo "${blue}  |××|    ${yellow}  ${void}~ ${NAME}"
-echo "${blue} ( \/ )   ${yellow}  ${void}~ $(cat /proc/sys/kernel/osrelease)"
-echo "${blue}  |––|    ${yellow}  ${void}~ ${SHELL##*/}"
-echo "${blue}  ^  ^    ${yellow}  ${void}~ ${wm}"
+echo -e "${blue}   __     ${red}$(cat /proc/sys/kernel/hostname)@${USER}${void}" 
+echo -e "${blue}  |××|    ${yellow}  ${void}~ ${NAME}"
+echo -e "${blue} ( \/ )   ${yellow}  ${void}~ $(cat /proc/sys/kernel/osrelease)"
+echo -e "${blue}  |––|    ${yellow}  ${void}~ ${SHELL##*/}"
+echo -e "${blue}  ^  ^    ${yellow}  ${void}~ ${wm}"
