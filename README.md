@@ -1,7 +1,8 @@
 # bird-fetch
 Simple system information tool
 
-![screenshot](https://github.com/dripbert/bird-fetch/blob/main/pic.png?raw=true)
+![screenshot](https://github.com/dripbert/bird-fetch/blob/main/picture.png?raw=true)
 
 # Install
-Move the file 'birdfetch' to your /usr/bin directory.
+- Make the file 'birdfetch' executable.
+- Move the file 'birdfetch' to your /usr/bin directory.
