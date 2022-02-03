@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 . /etc/os-release
 
 void="\e[0m"
@@ -19,7 +19,6 @@ else
     wm="some wm"
 fi
 
-
 if [ ${NAME} = "Arch" ]; then
     line1="   /\    "
     line2="  _\ \   "
@@ -29,7 +28,6 @@ if [ ${NAME} = "Arch" ]; then
 
     col1="\e[31m"
     col2="\e[36m"
-    col3="\e[36m"
 elif [ ${NAME} = "Debian" ]; then
     line1="  _--\   "
     line2=" / .  )  "
@@ -39,39 +37,35 @@ elif [ ${NAME} = "Debian" ]; then
 
     col1="\e[34m"
     col2="\e[31m"
-    col3="\e[31m"
 elif [ ${NAME} = "Fedora" ]; then
     line1="     ##  "
     line2="    #  # "
-    line3="  __##-  "
-    line4=" (  #    "
-    line5=" -##)    "
+    line3="  #####  "
+    line4=" #  #    "
+    line5="  ##     "
 
     col1="\e[31m"
     col2="\e[34m"
-    col3="\e[34m"
 elif [ ${NAME} = "FreeBSD" ]; then
-    line1=" ^     ^ "
-    line2="/_\-~-/_\\"
-    line3="|       |"
-    line4="|       |"
-    line5=" \_____/ "
+    line1=' /\-----/\ '
+    line2='/.`     `.\'
+    line3='|         |'
+    line4='|         |'
+    line5=' `._____.` '
 
     col1="\e[33m"
     col2="\e[31m"
-    col3="\e[31m"
 elif [ ${NAME} = "Gentoo" ]; then
-    line1=" _-'''-_ "
-    line2="(   O   \\"
-    line3=" -_     /"
-    line4="  /   _/ "
-    line5=" (__.~   "
+    line1='  .`````.  '
+	 line2='.`   .   `.'
+	 line3='`-.      .`'
+    line4=' .`    .`  '
+    line5='`.....`    '
 
     col1="\e[36m"
     col2="\e[35m"
-    col3="\e[35m"
 elif [ ${NAME} = "Manjaro" ]; then
-    line1="###~~ ## "
+    line1="##### ## "
     line2="## ## ## "
     line3="## ## ## "
     line4="## ## ## "
@@ -79,7 +73,6 @@ elif [ ${NAME} = "Manjaro" ]; then
 
     col1="\e[31m"
     col2="\e[32m"
-    col3="\e[32m"
 elif [ ${NAME} = "Mint" ]; then
     line1="--------\ "
     line2="|   _ _  |"
@@ -89,17 +82,15 @@ elif [ ${NAME} = "Mint" ]; then
 
     col1="\e[33m"
     col2="\e[32m"
-    col3="\e[32m"
 elif [ ${NAME} = "OpenBSD" ]; then
-    line1=" ./\---^ "
-    line2="<  O  O \\"
-    line3="|    3  >"
-    line4=" <     -/"
-    line5="  \-\/-  "
+    line1="  -/\--   "
+    line2="<  O  O  |"
+    line3="|    3   >"
+    line4=" <      / "
+    line5="    \/    "
 
     col1="\e[34m"
     col2="\e[33m"
-    col3="\e[33m"
 elif [ ${NAME} = "Ubuntu" ]; then
     line1="    _-   "
     line2="  / __ \O"
@@ -109,17 +100,15 @@ elif [ ${NAME} = "Ubuntu" ]; then
 
     col1="\e[33m"
     col2="\e[31m"
-    col3="\e[31m"
 elif [ ${NAME} = "Void" ]; then
-    line1="     ###\\"
-    line2=" #      #"
-    line3=" #  ##  #"
-    line4=" #      #"
-    line5=" \###    "
+    line1="     ###  "
+    line2=" #      # "
+    line3=" #  ##  # "
+    line4=" #      # "
+    line5="  ###     "
 
     col1="\e[31m"
     col2="\e[32m"
-    col3="\e[32m"
 else    
     line1="   __    "
     line2="  |××|   "
@@ -129,11 +118,10 @@ else
 
     col1="\e[31m"
     col2="\e[33m"
-    col3="\e[34m"
 fi
 
-echo -e "${col3}${line1} ${col1}\e[1m${USER}@$(cat /proc/sys/kernel/hostname)${void}" 
-echo -e "${col3}${line2} ${col2}\e[1mos     ${void}${PRETTY_NAME}"
-echo -e "${col3}${line3} ${col2}\e[1mkernel ${void}$(cat /proc/sys/kernel/osrelease)"
-echo -e "${col3}${line4} ${col2}\e[1mshell  ${void}${SHELL##*/}"
-echo -e "${col3}${line5} ${col2}\e[1mwm     ${void}${wm}"
+echo -e "\e[1m${col2}${line1} ${col1}\e[1m${USER}@$(cat /proc/sys/kernel/hostname)${void}" 
+echo -e "\e[1m${col2}${line2} ${col2}\e[1mos     ${void}${PRETTY_NAME}"
+echo -e "\e[1m${col2}${line3} ${col2}\e[1mkernel ${void}$(cat /proc/sys/kernel/osrelease)"
+echo -e "\e[1m${col2}${line4} ${col2}\e[1mshell  ${void}${SHELL##*/}"
+echo -e "\e[1m${col2}${line5} ${col2}\e[1mwm     ${void}${wm}"
