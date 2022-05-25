@@ -19,34 +19,34 @@ else
     wm="some wm"
 fi
 
-if [ ${NAME} = "Arch" ]; then
-    line1="   /\    "
-    line2="  _\ \   "
-    line3=" /    \  "
-    line4="/  ()  \ "
-    line5=" -^  ^-  "
+if [ "$NAME" == "Arch Linux" ]; then
+    line1="   /\      "
+    line2="  _\ \     "
+    line3=" /    \    "
+    line4="/  ()  \   "
+    line5=" -^  ^-    "
 
     col1="\e[31m"
     col2="\e[36m"
-elif [ ${NAME} = "Debian" ]; then
-    line1="  _--\   "
-    line2=" / .  )  "
-    line3=" (  -    "
-    line4="  \      "
-    line5="   ^     "
+elif [ "$NAME" == "Debian" ]; then
+    line1="  _--\     "
+    line2=" / .  )    "
+    line3=" (  -      "
+    line4="  \        "
+    line5="   ^       "
 
     col1="\e[34m"
     col2="\e[31m"
-elif [ ${NAME} = "Fedora" ]; then
-    line1="     ##  "
-    line2="    #  # "
-    line3="  #####  "
-    line4=" #  #    "
-    line5="  ##     "
+elif [ "$NAME" == "Fedora" ]; then
+    line1="     --    "
+    line2="    |  |   "
+    line3="  - | -    "
+    line4=" |  |      "
+    line5="  --       "
 
     col1="\e[31m"
     col2="\e[34m"
-elif [ ${NAME} = "FreeBSD" ]; then
+elif [ "$NAME" == "FreeBSD" ]; then
     line1=' /\-----/\ '
     line2='/.`     `.\'
     line3='|         |'
@@ -55,7 +55,7 @@ elif [ ${NAME} = "FreeBSD" ]; then
 
     col1="\e[33m"
     col2="\e[31m"
-elif [ ${NAME} = "Gentoo" ]; then
+elif [ "$NAME" == "Gentoo" ]; then
     line1='  .`````.  '
 	 line2='.`   .   `.'
 	 line3='`-.      .`'
@@ -64,57 +64,57 @@ elif [ ${NAME} = "Gentoo" ]; then
 
     col1="\e[36m"
     col2="\e[35m"
-elif [ ${NAME} = "Manjaro" ]; then
-    line1="##### ## "
-    line2="## ## ## "
-    line3="## ## ## "
-    line4="## ## ## "
-    line5="## ## ## "
+elif [ "$NAME" == "Manjaro" ]; then
+    line1="##### ##   "
+    line2="## ## ##   "
+    line3="## ## ##   "
+    line4="## ## ##   "
+    line5="## ## ##   "
 
     col1="\e[31m"
     col2="\e[32m"
-elif [ ${NAME} = "Mint" ]; then
-    line1="--------\ "
-    line2="|   _ _  |"
-    line3=" | / | \ |"
-    line4=" | |   | |"
-    line5=" \_______|"
+elif [ "$NAME" == "Mint" ]; then
+    line1="--------\  "
+    line2="|   _ _  | "
+    line3=" | / | \ | "
+    line4=" | |   | | "
+    line5=" \_______| "
 
     col1="\e[33m"
     col2="\e[32m"
-elif [ ${NAME} = "OpenBSD" ]; then
-    line1="  -/\--   "
-    line2="<  O  O  |"
-    line3="|    3   >"
-    line4=" <      / "
-    line5="    \/    "
+elif [ "$NAME" == "OpenBSD" ]; then
+    line1="  -/\--    "
+    line2="<  O  O  | "
+    line3="|    3   > "
+    line4=" <      /  "
+    line5="    \/     "
 
     col1="\e[34m"
     col2="\e[33m"
-elif [ ${NAME} = "Ubuntu" ]; then
-    line1="    _-   "
-    line2="  / __ \O"
-    line3="O( (  ) )"
-    line4="  \ -- / "
-    line5="    ~-O  "
+elif [ "$NAME" == "Ubuntu" ]; then
+    line1="    _-     "
+    line2="  / __ \O  "
+    line3="O( (  ) )  "
+    line4="  \ -- /   "
+    line5="    ~-O    "
 
     col1="\e[33m"
     col2="\e[31m"
-elif [ ${NAME} = "Void" ]; then
-    line1="     ###  "
-    line2=" #      # "
-    line3=" #  ##  # "
-    line4=" #      # "
-    line5="  ###     "
+elif [ "$NAME" == "Void" ]; then
+    line1="     ###   "
+    line2=" #      #  "
+    line3=" #  ##  #  "
+    line4=" #      #  "
+    line5="  ###      "
 
     col1="\e[31m"
     col2="\e[32m"
 else    
-    line1="   __    "
-    line2="  |××|   "
-    line3=" ( \/ )  "
-    line4="  |--|   "
-    line5="  ^  ^   "
+    line1="   __      "
+    line2="  |××|     "
+    line3=" ( \/ )    "
+    line4="  |--|     "
+    line5="  ^  ^     "
 
     col1="\e[31m"
     col2="\e[33m"
