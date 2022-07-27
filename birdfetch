@@ -3,23 +3,41 @@
 
 void="\e[0m"
 
-if grep -q dwm ~/.xinitrc; then
+if ps -aux | grep -q dwm; then
     wm="dwm"
-elif grep -q bspwm ~/.xinitrc; then
+elif ps -aux | grep -q bspwm; then
     wm="bspwm"
-elif grep -q qtile ~/.xinitrc; then
+elif ps -aux | grep -q qtile; then
     wm="qtile"
-elif grep -q xmonad ~/.xinitrc; then
+elif ps -aux | grep -q xmonad; then
     wm="xmonad"
-elif grep -q i3 ~/.xinitrc; then
+elif ps -aux | grep -q i3; then
     wm="i3"
-elif grep -q openbox ~/.xinitrc; then
+elif ps -aux | grep -q openbox; then
     wm="openbox"
 else
     wm="some wm"
 fi
 
-if [ "$NAME" == "Arch Linux" ]; then
+term="$TERM"
+case $TERM in
+    st-256color) term="st" ;;
+esac
+up="$(uptime -p)"
+
+distro=$ID
+
+line1="   __      "
+line2="  |××|     "
+line3=" ( \/ )    "
+line4="  |--|     "
+line5="  ^  ^     "
+
+col1="\e[31m"
+col2="\e[33m"
+
+case "$distro" in
+    "arch")
     line1="   /\      "
     line2="  _\ \     "
     line3=" /    \    "
@@ -27,8 +45,8 @@ if [ "$NAME" == "Arch Linux" ]; then
     line5=" -^  ^-    "
 
     col1="\e[31m"
-    col2="\e[36m"
-elif [ "$NAME" == "Debian" ]; then
+    col2="\e[36m" ;;
+    "debian")
     line1="  _--\     "
     line2=" / .  )    "
     line3=" (  -      "
@@ -36,8 +54,8 @@ elif [ "$NAME" == "Debian" ]; then
     line5="   ^       "
 
     col1="\e[34m"
-    col2="\e[31m"
-elif [ "$NAME" == "Fedora" ]; then
+    col2="\e[31m" ;;
+    "fedora")
     line1="     --    "
     line2="    |  |   "
     line3="  - | -    "
@@ -45,26 +63,26 @@ elif [ "$NAME" == "Fedora" ]; then
     line5="  --       "
 
     col1="\e[31m"
-    col2="\e[34m"
-elif [ "$NAME" == "FreeBSD" ]; then
-    line1=' /\-----/\ '
-    line2='/.`     `.\'
-    line3='|         |'
-    line4='|         |'
-    line5=' `._____.` '
+    col2="\e[34m" ;;
+    "freebsd")
+    line1=' /\----/\ '
+    line2='/.`    `.\'
+    line3='|        |'
+    line4='|        |'
+    line5=' `.____.` '
 
     col1="\e[33m"
-    col2="\e[31m"
-elif [ "$NAME" == "Gentoo" ]; then
+    col2="\e[31m" ;;
+    "gentoo")
     line1='  .`````.  '
-	 line2='.`   .   `.'
-	 line3='`-.      .`'
+    line2='.`   .   `.'
+    line3='`..      .`'
     line4=' .`    .`  '
     line5='`.....`    '
 
     col1="\e[36m"
-    col2="\e[35m"
-elif [ "$NAME" == "Manjaro" ]; then
+    col2="\e[35m" ;;
+    "manjaro")
     line1="##### ##   "
     line2="## ## ##   "
     line3="## ## ##   "
@@ -72,8 +90,8 @@ elif [ "$NAME" == "Manjaro" ]; then
     line5="## ## ##   "
 
     col1="\e[31m"
-    col2="\e[32m"
-elif [ "$NAME" == "Mint" ]; then
+    col2="\e[32m" ;;
+    "mint")
     line1="--------\  "
     line2="|   _ _  | "
     line3=" | / | \ | "
@@ -81,8 +99,8 @@ elif [ "$NAME" == "Mint" ]; then
     line5=" \_______| "
 
     col1="\e[33m"
-    col2="\e[32m"
-elif [ "$NAME" == "OpenBSD" ]; then
+    col2="\e[32m" ;;
+    "openbsd")
     line1="  -/\--    "
     line2="<  O  O  | "
     line3="|    3   > "
@@ -90,8 +108,8 @@ elif [ "$NAME" == "OpenBSD" ]; then
     line5="    \/     "
 
     col1="\e[34m"
-    col2="\e[33m"
-elif [ "$NAME" == "Ubuntu" ]; then
+    col2="\e[33m" ;;
+    "ubuntu")
     line1="    _-     "
     line2="  / __ \O  "
     line3="O( (  ) )  "
@@ -99,8 +117,8 @@ elif [ "$NAME" == "Ubuntu" ]; then
     line5="    ~-O    "
 
     col1="\e[33m"
-    col2="\e[31m"
-elif [ "$NAME" == "Void" ]; then
+    col2="\e[31m" ;;
+    "void")
     line1="     ###   "
     line2=" #      #  "
     line3=" #  ##  #  "
@@ -108,20 +126,20 @@ elif [ "$NAME" == "Void" ]; then
     line5="  ###      "
 
     col1="\e[31m"
-    col2="\e[32m"
-else    
-    line1="   __      "
-    line2="  |××|     "
-    line3=" ( \/ )    "
-    line4="  |--|     "
-    line5="  ^  ^     "
+    col2="\e[32m" ;;
+esac
 
-    col1="\e[31m"
-    col2="\e[33m"
-fi
+fills(){
+    n=$(echo "$line1" | wc -c)
+    for ((i = 0; i < $n; i++)); do printf " "; done
+}
 
-echo -e "\e[1m${col2}${line1} ${col1}\e[1m${USER}@$(cat /proc/sys/kernel/hostname)${void}" 
-echo -e "\e[1m${col2}${line2} ${col2}\e[1mos     ${void}${PRETTY_NAME}"
-echo -e "\e[1m${col2}${line3} ${col2}\e[1mkernel ${void}$(cat /proc/sys/kernel/osrelease)"
-echo -e "\e[1m${col2}${line4} ${col2}\e[1mshell  ${void}${SHELL##*/}"
-echo -e "\e[1m${col2}${line5} ${col2}\e[1mwm     ${void}${wm}"
+repc
+echo -e "${col1}\e[1m${USER}@$(hostname)${void}"
+echo -e "\e[1m${col2}${line1} os     ${void}${PRETTY_NAME}" 
+echo -e "\e[1m${col2}${line2} kernel ${void}$(uname -r)"
+echo -e "\e[1m${col2}${line3} uptime ${void}${up##up }"
+echo -e "\e[1m${col2}${line4} shell  ${void}${SHELL##*/}"
+echo -e "\e[1m${col2}${line5} wm     ${void}${wm}"
+fills
+echo -e "\e[1m${col2}term   ${void}${term}"
