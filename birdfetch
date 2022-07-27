@@ -131,10 +131,10 @@ esac
 
 fills(){
     n=$(echo "$line1" | wc -c)
-    for ((i = 0; i < $n; i++)); do printf " "; done
+	 for i in $(seq 1 $n); do printf " "; done
 }
 
-repc
+fills
 echo -e "${col1}\e[1m${USER}@$(hostname)${void}"
 echo -e "\e[1m${col2}${line1} os     ${void}${PRETTY_NAME}" 
 echo -e "\e[1m${col2}${line2} kernel ${void}$(uname -r)"
