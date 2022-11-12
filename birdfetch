@@ -3,64 +3,77 @@
 
 void="\e[0m"
 
-if ps -aux | grep -q dwm; then
-    wm="dwm"
-elif ps -aux | grep -q bspwm; then
-    wm="bspwm"
-elif ps -aux | grep -q qtile; then
-    wm="qtile"
-elif ps -aux | grep -q xmonad; then
-    wm="xmonad"
-elif ps -aux | grep -q i3; then
-    wm="i3"
-elif ps -aux | grep -q openbox; then
-    wm="openbox"
-else
-    wm="some wm"
-fi
+distro=$ID
 
+getWm()
+{
+ps -aux | grep -q [b]spwm && wm="bspwm" && return
+ps -aux | grep -q [d]wm && wm="dwm" && return
+ps -aux | grep -q [i]3 && wm="i3" && return
+ps -aux | grep -q [k]win && wm="kwin" && return
+ps -aux | grep -q [m]ate-session && wm="marco" && return
+ps -aux | grep -q [m]utter && wm="mutter" && return
+ps -aux | grep -q [o]penbox && wm="openbox" && return
+ps -aux | grep -q [q]tile && wm="qtile" && return
+ps -aux | grep -q [x]monad && wm="xmonad" && return
+wm="some wm"
+return
+}
+
+getTerm()
+{
 term="$TERM"
 case $TERM in
     st-256color) term="st" ;;
+    xterm-256color) term="xterm" ;;
 esac
-up="$(uptime -p)"
+}
 
-distro=$ID
+getUptime()
+{
+if [ $distro == "freebsd" ]; then
+    up="$(uptime|cut -c2-|cut -d' ' -f4,5|cut -d',' -f1)"
+else
+    up="$(uptime -p)"
+fi
+}
 
-line1="   __      "
-line2="  |××|     "
-line3=" ( \/ )    "
-line4="  |--|     "
-line5="  ^  ^     "
+getLogo()
+{
+line1="  __  "
+line2=" |××| "
+line3="( \/ )"
+line4=" |--| "
+line5=" ^  ^ "
 
 col1="\e[31m"
 col2="\e[33m"
 
 case "$distro" in
     "arch")
-    line1="   /\      "
-    line2="  _\ \     "
-    line3=" /    \    "
-    line4="/  ()  \   "
-    line5=" -^  ^-    "
+    line1="   /\    "
+    line2="  _\ \   "
+    line3=" /    \  "
+    line4="/  ()  \ "
+    line5=" -^  ^-  "
 
     col1="\e[31m"
     col2="\e[36m" ;;
     "debian")
-    line1="  _--\     "
-    line2=" / .  )    "
-    line3=" (  -      "
-    line4="  \        "
-    line5="   ^       "
+    line1=" _--\ "
+    line2="/ .  )"
+    line3="(  -  "
+    line4=" \    "
+    line5="  ^   "
 
     col1="\e[34m"
     col2="\e[31m" ;;
     "fedora")
-    line1="     --    "
-    line2="    |  |   "
-    line3="  - | -    "
-    line4=" |  |      "
-    line5="  --       "
+    line1="    -- "
+    line2="   |  |"
+    line3=" - | - "
+    line4="|  |   "
+    line5=" --    "
 
     col1="\e[31m"
     col2="\e[34m" ;;
@@ -83,60 +96,67 @@ case "$distro" in
     col1="\e[36m"
     col2="\e[35m" ;;
     "manjaro")
-    line1="##### ##   "
-    line2="## ## ##   "
-    line3="## ## ##   "
-    line4="## ## ##   "
-    line5="## ## ##   "
+    line1="##### ##"
+    line2="## ## ##"
+    line3="## ## ##"
+    line4="## ## ##"
+    line5="## ## ##"
 
     col1="\e[31m"
     col2="\e[32m" ;;
     "mint")
-    line1="--------\  "
-    line2="|   _ _  | "
-    line3=" | / | \ | "
-    line4=" | |   | | "
-    line5=" \_______| "
+    line1="________ "
+    line2="| . _ _ )"
+    line3=" ||| | ||"
+    line4=" ||____||"
+    line5=" '-------"
 
     col1="\e[33m"
     col2="\e[32m" ;;
     "openbsd")
-    line1="  -/\--    "
-    line2="<  O  O  | "
-    line3="|    3   > "
-    line4=" <      /  "
-    line5="    \/     "
+    line1='   _/\__   '
+    line2=' .`^   `> '
+    line3='<  O  O  |'
+    line4='| <  3   >'
+    line5=' <.__\/.` '
 
     col1="\e[34m"
     col2="\e[33m" ;;
     "ubuntu")
-    line1="    _-     "
+    line1="    __     "
     line2="  / __ \O  "
     line3="O( (  ) )  "
     line4="  \ -- /   "
-    line5="    ~-O    "
+    line5="    --O    "
 
     col1="\e[33m"
     col2="\e[31m" ;;
     "void")
-    line1="     ###   "
-    line2=" #      #  "
-    line3=" #  ##  #  "
-    line4=" #      #  "
-    line5="  ###      "
+    line1="    ###  "
+    line2=" #    ## "
+    line3=" #  #  # "
+    line4=" ##    # "
+    line5="  ###    "
 
     col1="\e[31m"
     col2="\e[32m" ;;
 esac
-
-fills(){
-    n=$(echo "$line1" | wc -c)
-	 for i in $(seq 1 $n); do printf " "; done
 }
+
+fills()
+{
+    n=$(echo "$line1" | wc -c)
+    for i in $(seq 1 $n); do printf " "; done
+}
+
+getWm
+getTerm
+getUptime
+getLogo
 
 fills
 echo -e "${col1}\e[1m${USER}@$(hostname)${void}"
-echo -e "\e[1m${col2}${line1} os     ${void}${PRETTY_NAME}" 
+echo -e "\e[1m${col2}${line1} os     ${void}${NAME}" 
 echo -e "\e[1m${col2}${line2} kernel ${void}$(uname -r)"
 echo -e "\e[1m${col2}${line3} uptime ${void}${up##up }"
 echo -e "\e[1m${col2}${line4} shell  ${void}${SHELL##*/}"
